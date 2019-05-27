@@ -14,6 +14,10 @@ function rand() {
   return num;
 }
 
+function wait(ms) {
+  return new Promise((resolve, reject) => setTimeout(resolve, 100, true));
+}
+
 export default {
   watch: {
     count: {
@@ -38,7 +42,10 @@ export default {
     }
   },
   serverPrefetch() {
-    this.$store.commit("set", rand());
+    return wait(100).then(() => {
+      console.log("in server");
+      this.$store.commit("set", rand());
+    });
   }
 };
 </script>
