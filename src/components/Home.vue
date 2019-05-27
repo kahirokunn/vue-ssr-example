@@ -37,8 +37,7 @@ export default {
       this.$store.commit("dec");
     }
   },
-  created() {
-    console.log("The value of this.count when created", this.count);
+  serverPrefetch() {
     this.$store.commit("set", rand());
   }
 };
