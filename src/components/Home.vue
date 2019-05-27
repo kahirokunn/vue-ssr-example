@@ -10,7 +10,7 @@
 <script>
 function rand() {
   const num = Number.parseInt(Math.random() * 100);
-  console.log("num", num);
+  console.log("rand func return", num);
   return num;
 }
 
@@ -23,25 +23,23 @@ export default {
       immediate: true
     }
   },
-  data() {
-    return {
-      count: 0
-    };
-  },
   computed: {
-    n: () => 70
+    n: () => 70,
+    count() {
+      return this.$store.state.count;
+    }
   },
   methods: {
     inc() {
-      this.count += 10;
+      this.$store.commit("inc");
     },
     dec() {
-      this.count -= 10;
+      this.$store.commit("dec");
     }
   },
   created() {
-    console.log("created", this.count);
-    this.count = rand();
+    console.log("The value of this.count when created", this.count);
+    this.$store.commit("set", rand());
   }
 };
 </script>

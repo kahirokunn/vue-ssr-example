@@ -3,6 +3,8 @@ import { createApp } from "./app";
 
 const { app, router, store } = createApp();
 
+console.log("created app");
+
 Vue.mixin({
 	beforeRouteUpdate(to, from, next) {
 		const { asyncData } = this.$options;
@@ -20,6 +22,8 @@ Vue.mixin({
 if (window.__INITIAL_STATE__) {
 	store.replaceState(window.__INITIAL_STATE__);
 }
+
+console.log("replaced state");
 
 router.onReady(() => {
 
@@ -50,7 +54,9 @@ router.onReady(() => {
 			.catch(next)
 	});
 
+	console.log("before mount");
 	app.$mount('#app');
+	console.log("mounted");
 });
 
 // service worker
