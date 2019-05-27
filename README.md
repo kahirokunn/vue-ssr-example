@@ -62,7 +62,7 @@ I will assume you have [Node](https://nodejs.org/en) and [NPM](https://www.npmjs
 npm init
 ```
 
-This will prompt you to setup your package name, version, license, etc, however, make sure to set entry point as `server.js`. Once this is completed, a `package.json` file will be created. Next, let's install some packages we will need to get started, run this: 
+This will prompt you to setup your package name, version, license, etc, however, make sure to set entry point as `server.js`. Once this is completed, a `package.json` file will be created. Next, let's install some packages we will need to get started, run this:
 
 ```bash
 npm install express vue vue-server-renderer --save
@@ -100,9 +100,7 @@ In the code snippet above, Vue was imported and we exported function `createApp(
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon" sizes="120x120" href="/public/logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <link rel="shortcut icon" sizes="48x48" href="/public/logo.png">
     <meta name="theme-color" content="#f60">
     <link rel="manifest" href="/manifest.json">
     <style>
@@ -138,7 +136,7 @@ const server = express();
 
 server.get('*', (req, res) => {
 	const app = createApp();
-	
+
 	const context = {
 		title: "Vue SSR Tutorial"
 	};
@@ -167,7 +165,7 @@ To see this simple example of server side rendering, execute this in your termin
 node server
 ```
 
-You should be able to view a web page that says "My name is: Okubanjo Oluwafunsho". 
+You should be able to view a web page that says "My name is: Okubanjo Oluwafunsho".
 
 This a simple server side rendered web page using Vue :)
 
@@ -198,7 +196,7 @@ export const createRouter = () => {
 	});
 };
 ```
-In the snippet above, Vue & `vue-router` were imported, also, we made Vue use the `vue-router` plugin. Also, we defined two routes `/` and `/articles/:source`, the first handles the homepage and the other handles the headline news for a particular source. We then imported a component for each route, these components will handle the logic. Since we need a fresh instance of the router for each request, we exported `createRouter` function. 
+In the snippet above, Vue & `vue-router` were imported, also, we made Vue use the `vue-router` plugin. Also, we defined two routes `/` and `/articles/:source`, the first handles the homepage and the other handles the headline news for a particular source. We then imported a component for each route, these components will handle the logic. Since we need a fresh instance of the router for each request, we exported `createRouter` function.
 
 Next, create `App.vue` in `src` folder, so that the path is `src/App.vue`. This file will be the parent component for the app. Copy the code snippet below:
 
@@ -267,14 +265,14 @@ import App from './App.vue'
 import { createRouter } from "./router";
 
 export function createApp () {
-	
+
 	const router = createRouter();
-	
+
 	const app = new Vue({
-		
+
 		router,
 		render: h => h(App)
-		
+
 	});
 	return { app, router}
 }
@@ -307,13 +305,13 @@ const axios = require('axios');
 const LRU = require('lru-cache');
 
 export function API(){
-	
+
 	axios.server = true;
 	axios.cachedItems = LRU({
 		max: 1000,
 		maxAge: 1000 * 60 * 10
 	});
-	
+
 	return axios;
 }
 ```
@@ -337,17 +335,17 @@ function cacheSources(){
 }
 
 function fetch(url, params = null){
-	
+
 	const cache = client.cachedItems;
-	
+
 	let key;
-	
+
 	if(params) {
 		key = url + '_' + params.source;
 	}else {
 		key = url;
 	}
-	
+
 	if(cache && cache.has(key)){
 		return Promise.resolve(cache.get(key));
 	}else {
@@ -355,14 +353,14 @@ function fetch(url, params = null){
 			client.get(url, {
 				params: params
 			}).then((res) => {
-				
+
 				if(res.data.status === "ok"){
 					cache && cache.set(key, res.data);
 					resolve(res.data);
 				}else{
 					reject("News API error: " + res.data.message);
 				}
-				
+
 			}).catch((err) => {
 				reject("Axios issue: " + err)
 			})
@@ -378,7 +376,7 @@ export function fetchHeadlines(source) {
 	return fetch('https://newsapi.org/v1/articles', { source: source, apiKey: NEWS_API });
 }
 
-``` 
+```
 
 Above, we imported `axios` depending on the environment; server or client side. This is handled by `webpack`, which creates an alias `axios-client` that resolves to `axios-server.js` if on the server or `axios-client.js` if on the client side.
 

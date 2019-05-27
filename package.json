@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel-node": "babel-node --presets=env",
     "dev": "node server",
+    "serve": "node server",
     "start": "cross-env NODE_ENV=production node server",
     "build": "rimraf dist && npm run build:client && npm run build:server",
     "build:client": "webpack --config config/webpack.client.config.js --progress --hide-modules",
